@@ -3,13 +3,13 @@ info:
   title: API Brancardage Hospitalier
   description: |
     API REST pour la gestion des demandes de brancardage dans un centre hospitalier.
-    
+
     Cette API permet de :
     - Rechercher et consulter les dossiers patients
     - Créer des demandes de transport (brancardage)
     - Gérer les médias associés aux demandes (photos, documents)
     - Récupérer la liste des destinations disponibles dans l'établissement
-    
+
     **Contexte métier :**
     L'application de brancardage permet au personnel soignant d'identifier un patient 
     (par recherche manuelle ou scan de bracelet), de créer une demande de transport 
@@ -18,6 +18,9 @@ info:
   contact:
     name: DSI Centre Hospitalier
     email: dsi@hopital.fr
+  license:
+    name: Propriétaire
+    url: https://hopital.internal/license
 
 servers:
   - url: http://localhost:8080/api/v1
@@ -104,12 +107,12 @@ paths:
             default: 20
           example: 20
       responses:
-        '200':
+        "200":
           description: Liste des patients correspondant aux critères de recherche
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PatientSearchResponse'
+                $ref: "#/components/schemas/PatientSearchResponse"
               example:
                 content:
                   - id: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
@@ -126,28 +129,28 @@ paths:
                 totalPages: 1
                 page: 0
                 size: 20
-        '400':
+        "400":
           description: Requête invalide (aucun critère fourni ou paramètres incorrects)
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
               example:
                 code: "INVALID_REQUEST"
                 message: "Au moins un critère de recherche doit être fourni"
                 timestamp: "2026-02-25T10:30:00Z"
-        '401':
+        "401":
           description: Non authentifié
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Erreur serveur interne
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /patients/{id}:
     get:
@@ -168,12 +171,12 @@ paths:
             format: uuid
           example: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
       responses:
-        '200':
+        "200":
           description: Dossier patient trouvé
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Patient'
+                $ref: "#/components/schemas/Patient"
               example:
                 id: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
                 ipp: "123456789"
@@ -189,28 +192,28 @@ paths:
                   - type: "PRECAUTION"
                     titre: "Précautions"
                     description: "Patient sous perfusion. Nécessite une potence à sérum."
-        '401':
+        "401":
           description: Non authentifié
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Patient non trouvé
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
               example:
                 code: "PATIENT_NOT_FOUND"
                 message: "Aucun patient trouvé avec l'identifiant spécifié"
                 timestamp: "2026-02-25T10:30:00Z"
-        '500':
+        "500":
           description: Erreur serveur interne
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /patients/by-ipp/{ipp}:
     get:
@@ -231,34 +234,34 @@ paths:
             pattern: '^\d{9}$'
           example: "123456789"
       responses:
-        '200':
+        "200":
           description: Patient trouvé
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Patient'
-        '401':
+                $ref: "#/components/schemas/Patient"
+        "401":
           description: Non authentifié
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Aucun patient avec cet IPP
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
               example:
                 code: "PATIENT_NOT_FOUND"
                 message: "Aucun patient trouvé avec l'IPP spécifié"
                 timestamp: "2026-02-25T10:30:00Z"
-        '500':
+        "500":
           description: Erreur serveur interne
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /destinations:
     get:
@@ -288,14 +291,14 @@ paths:
             default: false
           example: true
       responses:
-        '200':
+        "200":
           description: Liste des destinations
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Destination'
+                  $ref: "#/components/schemas/Destination"
               example:
                 - id: "dest-001"
                   nom: "Radiologie"
@@ -315,18 +318,18 @@ paths:
                   etage: 0
                   etageLibelle: "RDC"
                   frequente: true
-        '401':
+        "401":
           description: Non authentifié
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Erreur serveur interne
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /destinations/{id}:
     get:
@@ -344,30 +347,30 @@ paths:
             type: string
           example: "dest-001"
       responses:
-        '200':
+        "200":
           description: Destination trouvée
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Destination'
-        '401':
+                $ref: "#/components/schemas/Destination"
+        "401":
           description: Non authentifié
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Destination non trouvée
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Erreur serveur interne
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /brancardages:
     post:
@@ -388,7 +391,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BrancardageRequest'
+              $ref: "#/components/schemas/BrancardageRequest"
             example:
               patientId: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
               depart:
@@ -403,12 +406,12 @@ paths:
                 - "media-001"
               commentaire: "Patient sous perfusion, prévoir potence à sérum"
       responses:
-        '201':
+        "201":
           description: Demande de brancardage créée avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BrancardageResponse'
+                $ref: "#/components/schemas/BrancardageResponse"
               example:
                 id: "bran-12345"
                 statut: "EN_ATTENTE"
@@ -431,14 +434,16 @@ paths:
                 medias:
                   - id: "media-001"
                     url: "/uploads/media-001.jpg"
-                    type: "IMAGE"
+                    type: "PHOTO"
+                    mimeType: "image/jpeg"
+                    dateUpload: "2026-02-25T10:25:00Z"
                 commentaire: "Patient sous perfusion, prévoir potence à sérum"
-        '400':
+        "400":
           description: Requête invalide (données manquantes ou incorrectes)
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
               example:
                 code: "INVALID_REQUEST"
                 message: "Le patient spécifié n'existe pas"
@@ -446,28 +451,28 @@ paths:
                 details:
                   - field: "patientId"
                     message: "Patient introuvable"
-        '401':
+        "401":
           description: Non authentifié
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '422':
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
           description: Entité non traitable (validation métier échouée)
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
               example:
                 code: "VALIDATION_ERROR"
                 message: "La destination spécifiée n'est pas disponible"
                 timestamp: "2026-02-25T10:30:00Z"
-        '500':
+        "500":
           description: Erreur serveur interne
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
     get:
       tags:
@@ -515,24 +520,24 @@ paths:
             maximum: 100
             default: 20
       responses:
-        '200':
+        "200":
           description: Liste des demandes de brancardage
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BrancardageListResponse'
-        '401':
+                $ref: "#/components/schemas/BrancardageListResponse"
+        "401":
           description: Non authentifié
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Erreur serveur interne
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /brancardages/{id}:
     get:
@@ -550,30 +555,30 @@ paths:
             type: string
           example: "bran-12345"
       responses:
-        '200':
+        "200":
           description: Demande de brancardage trouvée
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BrancardageResponse'
-        '401':
+                $ref: "#/components/schemas/BrancardageResponse"
+        "401":
           description: Non authentifié
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Demande non trouvée
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Erreur serveur interne
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /medias:
     post:
@@ -582,11 +587,11 @@ paths:
       summary: Uploader un fichier média
       description: |
         Upload un fichier média (photo ou document scanné) pour l'associer à une demande de brancardage.
-        
+
         Types de fichiers acceptés :
         - Images : JPEG, PNG (max 10 Mo)
         - Documents : PDF (max 5 Mo)
-        
+
         L'image sera automatiquement compressée si nécessaire.
       operationId: uploadMedia
       requestBody:
@@ -615,12 +620,12 @@ paths:
                   maxLength: 500
                   description: Description optionnelle du média
       responses:
-        '201':
+        "201":
           description: Fichier uploadé avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Media'
+                $ref: "#/components/schemas/Media"
               example:
                 id: "media-001"
                 url: "/uploads/media-001.jpg"
@@ -629,38 +634,38 @@ paths:
                 taille: 245678
                 dateUpload: "2026-02-25T10:25:00Z"
                 description: "Photo de l'équipement requis"
-        '400':
+        "400":
           description: Requête invalide (fichier manquant ou format non supporté)
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
               example:
                 code: "INVALID_FILE"
                 message: "Format de fichier non supporté. Formats acceptés : JPEG, PNG, PDF"
                 timestamp: "2026-02-25T10:30:00Z"
-        '401':
+        "401":
           description: Non authentifié
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '413':
+                $ref: "#/components/schemas/ErrorResponse"
+        "413":
           description: Fichier trop volumineux
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
               example:
                 code: "FILE_TOO_LARGE"
                 message: "Le fichier dépasse la taille maximale autorisée (10 Mo pour les images, 5 Mo pour les documents)"
                 timestamp: "2026-02-25T10:30:00Z"
-        '500':
+        "500":
           description: Erreur serveur interne
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /medias/{id}:
     get:
@@ -678,30 +683,30 @@ paths:
             type: string
           example: "media-001"
       responses:
-        '200':
+        "200":
           description: Média trouvé
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Media'
-        '401':
+                $ref: "#/components/schemas/Media"
+        "401":
           description: Non authentifié
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Média non trouvé
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Erreur serveur interne
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
     delete:
       tags:
@@ -720,36 +725,36 @@ paths:
             type: string
           example: "media-001"
       responses:
-        '204':
+        "204":
           description: Média supprimé avec succès
-        '401':
+        "401":
           description: Non authentifié
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Média non trouvé
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '409':
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
           description: Conflit - Le média est associé à une demande validée
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
               example:
                 code: "MEDIA_IN_USE"
                 message: "Ce média est associé à une demande de brancardage et ne peut pas être supprimé"
                 timestamp: "2026-02-25T10:30:00Z"
-        '500':
+        "500":
           description: Erreur serveur interne
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /uploads/{filename}:
     get:
@@ -767,7 +772,7 @@ paths:
             type: string
           example: "media-001.jpg"
       responses:
-        '200':
+        "200":
           description: Fichier retourné
           content:
             image/jpeg:
@@ -782,24 +787,24 @@ paths:
               schema:
                 type: string
                 format: binary
-        '401':
+        "401":
           description: Non authentifié
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: Fichier non trouvé
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
           description: Erreur serveur interne
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
 components:
   securitySchemes:
@@ -882,7 +887,7 @@ components:
           type: array
           description: Liste des alertes et précautions médicales
           items:
-            $ref: '#/components/schemas/AlerteMedicale'
+            $ref: "#/components/schemas/AlerteMedicale"
 
     AlerteMedicale:
       type: object
@@ -923,7 +928,7 @@ components:
           type: array
           description: Liste des patients correspondant aux critères
           items:
-            $ref: '#/components/schemas/Patient'
+            $ref: "#/components/schemas/Patient"
         totalElements:
           type: integer
           description: Nombre total de patients correspondant aux critères
@@ -1020,7 +1025,7 @@ components:
           description: Identifiant unique du patient à transporter
           example: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
         depart:
-          $ref: '#/components/schemas/Localisation'
+          $ref: "#/components/schemas/Localisation"
         destinationId:
           type: string
           description: Identifiant de la destination choisie
@@ -1078,16 +1083,16 @@ components:
           description: Date et heure de fin du transport
           example: "2026-02-25T11:00:00Z"
         patient:
-          $ref: '#/components/schemas/PatientResume'
+          $ref: "#/components/schemas/PatientResume"
         depart:
-          $ref: '#/components/schemas/Localisation'
+          $ref: "#/components/schemas/Localisation"
         destination:
-          $ref: '#/components/schemas/Destination'
+          $ref: "#/components/schemas/Destination"
         medias:
           type: array
           description: Liste des médias associés à la demande
           items:
-            $ref: '#/components/schemas/Media'
+            $ref: "#/components/schemas/Media"
         commentaire:
           type: string
           description: Commentaire ou instructions supplémentaires
@@ -1134,7 +1139,7 @@ components:
           type: array
           description: Liste des demandes de brancardage
           items:
-            $ref: '#/components/schemas/BrancardageResponse'
+            $ref: "#/components/schemas/BrancardageResponse"
         totalElements:
           type: integer
           description: Nombre total de demandes
@@ -1221,7 +1226,7 @@ components:
           type: array
           description: Détails supplémentaires sur les erreurs de validation
           items:
-            $ref: '#/components/schemas/ErrorDetail'
+            $ref: "#/components/schemas/ErrorDetail"
 
     ErrorDetail:
       type: object

@@ -32,6 +32,14 @@ La spécification doit inclure :
 - Inclure des exemples pour les requêtes et réponses
 - Ajouter des descriptions claires pour chaque endpoint et paramètre
 
+## Definition of Done
+
+La spécification générée doit passer la validation Redocly sans erreur :
+
+```bash
+npx @redocly/cli lint swagger/api.yml --skip-rule no-server-example.com
+```
+
 ## Output
 
 `/swagger/api.yml`
