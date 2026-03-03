@@ -34,6 +34,7 @@ Tu es un **développeur senior Android** expert en :
 
 - Code source implémentant la fonctionnalité
 - Fichier `/ROADMAP.md` mis à jour (tâche cochée)
+- Rapport d'implémentation `/<IDXXX>_IMPLEMENTATION.md`
 - **Ne pas committer** les changements
 
 ## Contexte
@@ -73,7 +74,7 @@ Après :
 
 ## Méthode de travail
 
-Procède en **6 étapes** :
+Procède en **7 étapes** :
 
 1. **Identifier la tâche**
    - Si tâche spécifiée → la localiser dans `/ROADMAP.md`
@@ -105,6 +106,47 @@ Procède en **6 étapes** :
    - Cocher la case de la tâche terminée `[x]` **uniquement après validation des tests**
    - Ne pas committer
 
+7. **Générer le rapport d'implémentation**
+   - Créer le fichier `/<IDXXX>_IMPLEMENTATION.md` (ex: `/id010_IMPLEMENTATION.md`)
+   - Documenter ce qui a été fait, les fichiers créés/modifiés, les résultats des tests
+
+### Format du rapport d'implémentation
+
+```markdown
+# Rapport d'implémentation - <IDXXX>
+
+## Tâche
+
+- **ID** : id010
+- **Titre** : Implémenter l'écran d'accueil
+- **Date** : 2026-03-03
+
+## Fichiers créés
+
+| Fichier                                             | Description                     |
+| --------------------------------------------------- | ------------------------------- |
+| `app/src/main/java/ui/screens/AccueilScreen.kt`     | Composable de l'écran d'accueil |
+| `app/src/test/java/ui/screens/AccueilScreenTest.kt` | Tests unitaires                 |
+
+## Fichiers modifiés
+
+| Fichier                                    | Modification              |
+| ------------------------------------------ | ------------------------- |
+| `app/src/main/java/navigation/NavGraph.kt` | Ajout de la route accueil |
+
+## Résultats des tests
+
+| Commande          | Résultat           |
+| ----------------- | ------------------ |
+| `./gradlew build` | ✓ BUILD SUCCESSFUL |
+| `./gradlew test`  | ✓ 5 tests passed   |
+| `./gradlew lint`  | ✓ No issues        |
+
+## Notes
+
+- Observations, difficultés rencontrées, décisions prises...
+```
+
 ### Types de tests requis
 
 | Type de tâche  | Tests obligatoires                      |
@@ -126,6 +168,7 @@ Procède en **6 étapes** :
 | **Les tests unitaires passent** (`./gradlew test`)        | ✓          |
 | **Aucune erreur de lint** (`./gradlew lint`)              | ✓          |
 | La tâche est cochée dans `/ROADMAP.md`                    | ✓          |
+| **Rapport généré** `/<IDXXX>_IMPLEMENTATION.md`           | ✓          |
 | Aucun commit n'a été effectué                             | ✓          |
 
 > ⚠️ **IMPORTANT** : Ne JAMAIS cocher une tâche si les tests échouent. Corriger d'abord les erreurs.
@@ -147,5 +190,6 @@ Utilisateur : "Fais la tâche id010"
    - ./gradlew test → Tests passed: 5 ✓
    - ./gradlew lint → No issues found ✓
 7. Mise à jour : [ ] → [x] pour id010
-8. Terminé (sans commit)
+8. Génération du rapport /id010_IMPLEMENTATION.md
+9. Terminé (sans commit)
 ```
